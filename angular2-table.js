@@ -3,12 +3,12 @@ webpackJsonp([2],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(139);
+	module.exports = __webpack_require__(196);
 
 
 /***/ },
 
-/***/ 23:
+/***/ 35:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -88,7 +88,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 29:
+/***/ 50:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -159,7 +159,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 30:
+/***/ 51:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -222,7 +222,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 31:
+/***/ 52:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -237,7 +237,7 @@ webpackJsonp([2],{
 	};
 	var core_1 = __webpack_require__(1);
 	var common_1 = __webpack_require__(6);
-	var ng_table_sorting_directive_1 = __webpack_require__(23);
+	var ng_table_sorting_directive_1 = __webpack_require__(35);
 	var NgTableComponent = (function () {
 	    function NgTableComponent() {
 	        this.rows = [];
@@ -279,14 +279,19 @@ webpackJsonp([2],{
 	    });
 	    NgTableComponent.prototype.onChangeTable = function (column) {
 	        this._columns.forEach(function (col) {
-	            if (col.name !== column.name) {
+	            if (col.name !== column.name && col.sort !== false) {
 	                col.sort = '';
 	            }
 	        });
 	        this.tableChanged.emit({ sorting: this.configColumns });
 	    };
 	    NgTableComponent.prototype.getData = function (row, propertyName) {
-	        return propertyName.split('.').reduce(function (prev, curr) { return prev[curr]; }, row);
+	        var value = propertyName.split('.').reduce(function (prev, curr) { return prev[curr]; }, row);
+	        var column = this._columns.find(function (col) { return col.name === propertyName; });
+	        if (column.render) {
+	            value = column.render(value, row);
+	        }
+	        return value;
 	    };
 	    __decorate([
 	        core_1.Input(), 
@@ -308,7 +313,7 @@ webpackJsonp([2],{
 	    NgTableComponent = __decorate([
 	        core_1.Component({
 	            selector: 'ng-table',
-	            template: "\n    <table class=\"table table-striped table-bordered dataTable\"\n           role=\"grid\" style=\"width: 100%;\">\n      <thead>\n      <tr role=\"row\">\n        <th *ngFor=\"let column of columns\" [ngTableSorting]=\"config\" [column]=\"column\" (sortChanged)=\"onChangeTable($event)\">\n          {{column.title}}\n          <i *ngIf=\"config && column.sort\" class=\"pull-right fa\"\n            [ngClass]=\"{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}\"></i>\n        </th>\n      </tr>\n      </thead>\n      <tbody>\n      <tr *ngFor=\"let row of rows\">\n        <td *ngFor=\"let column of columns\">{{getData(row, column.name)}}</td>\n      </tr>\n      </tbody>\n    </table>\n",
+	            template: "\n    <table class=\"table table-striped table-bordered dataTable\"\n           role=\"grid\" style=\"width: 100%;\">\n      <thead>\n      <tr role=\"row\">\n        <th *ngFor=\"let column of columns\" [ngTableSorting]=\"config\" [column]=\"column\" (sortChanged)=\"onChangeTable($event)\">\n          {{column.title}}\n          <i *ngIf=\"config && column.sort\" class=\"pull-right fa\"\n            [ngClass]=\"{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}\"></i>\n        </th>\n      </tr>\n      </thead>\n      <tbody>\n      <tr *ngFor=\"let row of rows\">\n        <td *ngFor=\"let column of columns\" [innerHTML]=getData(row, column.name)></td>\n      </tr>\n      </tbody>\n    </table>\n",
 	            directives: [ng_table_sorting_directive_1.NgTableSortingDirective, common_1.NgClass, common_1.CORE_DIRECTIVES]
 	        }), 
 	        __metadata('design:paramtypes', [])
@@ -320,35 +325,35 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 138:
+/***/ 195:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var ng_table_component_1 = __webpack_require__(31);
-	var ng_table_filtering_directive_1 = __webpack_require__(29);
-	var ng_table_paging_directive_1 = __webpack_require__(30);
-	var ng_table_sorting_directive_1 = __webpack_require__(23);
+	var ng_table_component_1 = __webpack_require__(52);
+	var ng_table_filtering_directive_1 = __webpack_require__(50);
+	var ng_table_paging_directive_1 = __webpack_require__(51);
+	var ng_table_sorting_directive_1 = __webpack_require__(35);
 	exports.NG_TABLE_DIRECTIVES = [ng_table_component_1.NgTableComponent, ng_table_filtering_directive_1.NgTableFilteringDirective, ng_table_paging_directive_1.NgTablePagingDirective, ng_table_sorting_directive_1.NgTableSortingDirective];
 
 
 /***/ },
 
-/***/ 139:
+/***/ 196:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	var ng_table_component_1 = __webpack_require__(31);
-	var ng_table_filtering_directive_1 = __webpack_require__(29);
-	var ng_table_paging_directive_1 = __webpack_require__(30);
-	var ng_table_sorting_directive_1 = __webpack_require__(23);
-	__export(__webpack_require__(31));
-	__export(__webpack_require__(29));
-	__export(__webpack_require__(30));
-	__export(__webpack_require__(23));
-	__export(__webpack_require__(138));
+	var ng_table_component_1 = __webpack_require__(52);
+	var ng_table_filtering_directive_1 = __webpack_require__(50);
+	var ng_table_paging_directive_1 = __webpack_require__(51);
+	var ng_table_sorting_directive_1 = __webpack_require__(35);
+	__export(__webpack_require__(52));
+	__export(__webpack_require__(50));
+	__export(__webpack_require__(51));
+	__export(__webpack_require__(35));
+	__export(__webpack_require__(195));
 	Object.defineProperty(exports, "__esModule", { value: true });
 	exports.default = {
 	    directives: [
