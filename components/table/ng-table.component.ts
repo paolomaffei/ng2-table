@@ -18,7 +18,7 @@ import {NgTableSortingDirective} from './ng-table-sorting.directive';
       </thead>
       <tbody>
       <tr *ngFor="let row of rows">
-        <td *ngFor="let column of columns">{{getData(row, column.name)}}</td>
+        <td *ngFor="let column of columns" [innerHTML]=getData(row, column.name)></td>
       </tr>
       </tbody>
     </table>
